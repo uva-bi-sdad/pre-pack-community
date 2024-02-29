@@ -45,16 +45,13 @@ jobs:
       - name: List files
         run: |
           ls -la
-      - name: Save zip
-        run: |
-          zip -r renv.zip renv
       - name: Commit files # Commit changes. You need to do this so child sites work...
-        working-directory: parent/${{ github.event.repository.name }}
+        working-directory: ${{ github.event.repository.name }}
         run: |
           ls -la
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add -A
-          git commit -m "generating dashboard"
+          git commit -m "saving renv"
           git push
 
