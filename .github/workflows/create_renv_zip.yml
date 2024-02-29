@@ -23,6 +23,8 @@ jobs:
       id-token: write
       contents: write
       pages: write
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}    
     steps:
       # Downloading both the repositories to simulate the original task
       - uses: actions/checkout@main
