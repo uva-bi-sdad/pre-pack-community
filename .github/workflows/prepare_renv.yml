@@ -42,16 +42,21 @@ jobs:
           install.packages('remotes')
           remotes::install_github('uva-bi-sdad/community')
           renv::snapshot()
-      - name: Remove .gitignore inside renv/ to save binaries
-        run: |
-          ls -la
-          rm ${{ github.workspace }}/${{ github.event.repository.name }}/renv/.gitignore
-      - name: Commit files # Commit changes. You need to do this so child sites work...
-        working-directory: ${{ github.event.repository.name }}
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add -A
-          git commit -m "saving renv"
-          git push
+      - name: Cache packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/${{ github.event.repository.name }}/renv
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+      # - name: Remove .gitignore inside renv/ to save binaries
+      #   run: |
+      #     ls -la
+      #     rm ${{ github.workspace }}/${{ github.event.repository.name }}/renv/.gitignore
+      # - name: Commit files # Commit changes. You need to do this so child sites work...
+      #   working-directory: ${{ github.event.repository.name }}
+      #   run: |
+      #     git config --local user.email "actions@github.com"
+      #     git config --local user.name "GitHub Actions"
+      #     git add -A
+      #     git commit -m "saving renv"
+      #     git push
 
