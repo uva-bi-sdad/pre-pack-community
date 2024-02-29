@@ -1,7 +1,7 @@
 name: create renv
 on:
-  # schedule:
-  #   - cron: '0 21 * * 2,5' # Run on Tuesday and Friday 9pm UTC (5pm EST)
+  schedule:
+    - cron: '0 0 1 * *' # Run once every month to referesh artifact
   push:
     branches:
         - main
@@ -42,11 +42,19 @@ jobs:
           install.packages('remotes')
           remotes::install_github('uva-bi-sdad/community')
           renv::snapshot()
-      - name: Cache packages
-        uses: actions/cache@v3
+      # # Caches by default last only 10 minutes
+      # - name: Cache packages
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ${{ github.workspace }}/${{ github.event.repository.name }}/renv
+      #     key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+      - uses: actions/upload-artifact@v3
+        if: always()
         with:
-          path: ${{ github.workspace }}/${{ github.event.repository.name }}/renv
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          name: community_renv
+          path: |
+            ${{ github.workspace }}/${{ github.event.repository.name }}/renv
+          retention-days: 30
       # - name: Remove .gitignore inside renv/ to save binaries
       #   run: |
       #     ls -la
