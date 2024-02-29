@@ -53,7 +53,7 @@ jobs:
           tree .
       - name: create an archive
         run: |
-          zip -r${{ github.workspace }}/${{ github.event.repository.name }}/renv.zip ${{ github.workspace }}/${{ github.event.repository.name }}/renv
+          zip -r ${{ github.workspace }}/${{ github.event.repository.name }}/renv.zip ${{ github.workspace }}/${{ github.event.repository.name }}/renv
       - uses: actions/upload-artifact@v3
         if: always()
         with:
