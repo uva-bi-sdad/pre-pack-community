@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
   
 jobs:
-  create-zip:
+  create-renv:
     # Don't run if a pull request but not closed
     if: github.event_name == 'schedule' || ((github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == 'true') || github.event_name == 'push')
     runs-on: ubuntu-latest
@@ -44,11 +44,11 @@ jobs:
           renv::snapshot()
       - name: Remove .gitignore inside renv/ to save binaries
         run: |
+          ls -la
           rm ${{ github.workspace }}/${{ github.event.repository.name }}/renv/.gitignore
       - name: Commit files # Commit changes. You need to do this so child sites work...
         working-directory: ${{ github.event.repository.name }}
         run: |
-          ls -la
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add -A
