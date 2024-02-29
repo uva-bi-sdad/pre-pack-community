@@ -48,12 +48,15 @@ jobs:
       #   with:
       #     path: ${{ github.workspace }}/${{ github.event.repository.name }}/renv
       #     key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+      - name: create an archive
+        run: |
+          zip -r ${{ github.workspace }}/${{ github.event.repository.name }}/renv.zip ${{ github.workspace }}/${{ github.event.repository.name }}/renv.zip
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: community_renv
           path: |
-            ${{ github.workspace }}/${{ github.event.repository.name }}/renv
+            ${{ github.workspace }}/${{ github.event.repository.name }}/renv.zip
           retention-days: 30
       # - name: Remove .gitignore inside renv/ to save binaries
       #   run: |
