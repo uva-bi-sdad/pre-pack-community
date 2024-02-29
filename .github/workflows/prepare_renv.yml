@@ -50,7 +50,7 @@ jobs:
       #     key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
       - name: create an archive
         run: |
-          zip -r ${{ github.workspace }}/renv.zip ${{ github.workspace }}/renv.zip
+          zip -r ${{ github.workspace }}/renv.zip ${{ github.workspace }}/renv
       - uses: actions/upload-artifact@v3
         if: always()
         with:
