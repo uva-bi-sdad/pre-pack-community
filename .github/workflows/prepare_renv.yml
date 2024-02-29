@@ -59,7 +59,7 @@ jobs:
         with:
           name: community_renv
           path: |
-            ${{ github.workspace }}/renv.zip
+            ${{ github.workspace }}/${{ github.event.repository.name }}/renv.zip
           retention-days: 30
       # - name: Remove .gitignore inside renv/ to save binaries
       #   run: |
