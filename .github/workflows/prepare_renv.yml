@@ -1,4 +1,4 @@
-name: create 
+name: create renv
 on:
   # schedule:
   #   - cron: '0 21 * * 2,5' # Run on Tuesday and Friday 9pm UTC (5pm EST)
