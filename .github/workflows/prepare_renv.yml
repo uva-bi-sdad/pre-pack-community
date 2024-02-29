@@ -42,9 +42,9 @@ jobs:
           install.packages('remotes')
           remotes::install_github('uva-bi-sdad/community')
           renv::snapshot()
-      - name: List files
+      - name: Remove .gitignore inside renv/ to save binaries
         run: |
-          ls -la
+          rm ${{ github.workspace }}/${{ github.event.repository.name }}/renv/.gitignore
       - name: Commit files # Commit changes. You need to do this so child sites work...
         working-directory: ${{ github.event.repository.name }}
         run: |
