@@ -26,6 +26,9 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}    
     steps:
+      - name: Installing dependencies
+        run: |
+           sudo apt-get install libcurl4-openssl-dev
       # Downloading both the repositories to simulate the original task
       - uses: actions/checkout@main
         with:
@@ -40,6 +43,7 @@ jobs:
           renv::init()	
           renv::restore()	
           install.packages('remotes')
+          install.packages('vroom')
           remotes::install_github('uva-bi-sdad/community')
           renv::snapshot()
       # # Caches by default last only 10 minutes
